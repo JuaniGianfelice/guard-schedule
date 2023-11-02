@@ -6,11 +6,11 @@ const Home = () => {
         <form>
           <div class="form-group">
             <label for="user">Usuario:</label>
-            <input type="text" id="user" name="user" placeholder="Ingrese su usuario" />
+            <input type="text" id="user" name="user" placeholder="Ingrese su usuario" required/>
           </div>
           <div class="form-group">
             <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" />
+            <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required/>
           </div>
           <button type="submit" class="btn-login">Ingresar</button>
         </form>

@@ -1,6 +1,9 @@
+import Topbar from "../components/topbar/Topbar";
+
 const Dashboard = () => {
     return (
-      <div>
+      <div className="dashboard">
+        <Topbar/>
         Dashboard
       </div>
     );
