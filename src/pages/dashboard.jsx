@@ -1,10 +1,12 @@
+import Schedule from "../components/schedule/schedule";
 import Topbar from "../components/topbar/Topbar";
+
 
 const Dashboard = () => {
     return (
       <div className="dashboard">
         <Topbar/>
-        Dashboard
+        <Schedule/>
       </div>
     );
   }

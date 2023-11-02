@@ -1,6 +1,5 @@
 import "./topbar.scss";
 
-
 const Topbar = () => {
   return (
     <div className='topbar '>
