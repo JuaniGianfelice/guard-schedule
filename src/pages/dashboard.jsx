@@ -1,5 +1,5 @@
 import Schedule from "../components/schedule/schedule";
-import Topbar from "../components/topbar/Topbar";
+import Topbar from "../components/topbar/topbar";
 
 
 const Dashboard = () => {
