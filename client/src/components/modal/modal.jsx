@@ -12,7 +12,7 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
     onEventAdded({
       title: title,
-      dale: date.toISOString(),
+      date: date.toISOString(),
     });
 
     onClose();
@@ -28,7 +28,7 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
         />
         <div>
           <label>Ingresar Fecha</label>
-          <DateTime value={date} onChange={(newDate) => setDate(newDate)} dateFormat="DD-MM-YYYY" timeFormat="HH:mm"/>
+          <DateTime value={date} onChange={(newDate) => setDate(newDate)} dateFormat="DD-MM-YYYY" timeFormat={false}/>
         </div>
         <button type="submit">Agregar</button>
       </form>
