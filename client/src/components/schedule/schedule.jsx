@@ -14,6 +14,11 @@ const Schedule = () => {
     calendarApi.addEvent(event);
   };
 
+  const logout = () => {
+    window.location.href = "/"
+    //agregar logica una vez creada la base de dato y los usuarios
+  }
+
   return (
     <div className="schedule" >
       <FullCalendar
@@ -22,17 +27,23 @@ const Schedule = () => {
         initialView="dayGridMonth"
         weekNumberCalculation="ISO"
         locale="es"
-        height={650}
+        height={600}
         headerToolbar={{
-          left: "Agregar",
+          left: "Add",
           center: "title",
-          right: "today prev,next",
+          right: "today prev,next CloseSesion",
         }}
+        weekNumbersWithinDays={5}
         customButtons={{
-          Agregar: {
+          Add: {
             text: "Agregar Guardia",
             click: () => setModalOpen(true),
           },
+          CloseSesion: {
+            text: "Cerrar Sesion",
+            click: () => logout(true),
+            //agregar logica una vez creada la base de dato y los usuarios
+          }
         }}
       />
 

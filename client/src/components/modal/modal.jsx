@@ -20,15 +20,14 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose}>
-      <form onSubmit={onSubmit}>
-        <input
-          placeholder="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      <form onSubmit={onSubmit} className="modal">
+        <div className="section">
+          <label>Seleccionar Profesional</label>
+          <input placeholder="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        </div>
         <div>
           <label>Ingresar Fecha</label>
-          <DateTime value={date} onChange={(newDate) => setDate(newDate)} dateFormat="DD-MM-YYYY" timeFormat={false}/>
+          <DateTime value={date} onChange={(newDate) => setDate(newDate)} dateFormat="DD-MM-YYYY" timeFormat={false} />
         </div>
         <button type="submit">Agregar</button>
       </form>
