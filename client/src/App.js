@@ -1,5 +1,6 @@
 import Home from './pages/home'
-import Dashboard from './pages/dashboard'
+import UserDashboard from './pages/userDashboard'
+import AdminDashboard from './pages/adminDashboard'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Modal from 'react-modal'
 
@@ -10,7 +11,8 @@ const App = () => {
     <BrowserRouter>
     <Routes>
       <Route path = "/" element = {<Home/>}/>
-      <Route path = "/dashboard" element = {<Dashboard/>}/>
+      <Route path = "/userdashboard" element = {<UserDashboard/>}/>
+      <Route path = "/admindashboard" element = {<AdminDashboard/>}/>
     </Routes>
     </BrowserRouter>
   );

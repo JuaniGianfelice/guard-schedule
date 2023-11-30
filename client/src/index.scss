@@ -5,7 +5,7 @@
     padding: 0;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
-    }
+}
 
 .home {
     background-image: url('../public/background.png');
@@ -17,7 +17,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 
     .container {
         background-color: rgba(0, 0, 0, 0.2);
@@ -58,9 +57,25 @@
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
-    /*display: flex;
-    justify-content: center;
-    align-items: center;*/
 
-   
+    .menu {
+        background-color: aquamarine;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        button {
+            padding: 15px; // Ajusta el padding según tus preferencias
+            background-color: #2c3e50;
+            color: white; // Color del texto
+            border-radius: 10px; // Elimina el borde si no lo quieres
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 1); // Cambia el color al pasar el mouse
+            }
+        }
+    }
 }
