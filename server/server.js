@@ -16,6 +16,8 @@ mongoose.connect(
   () => console.log("Conected to MongoDB")
 );
 
-app.use("/api/calendar", require("./Controllers/calendarController"))
+app.use("/api/calendar", require("./Controllers/calendarController"));
 
-app.listen(3000, () => console.log("Server started"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+

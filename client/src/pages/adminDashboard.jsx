@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../index.scss";
 import UserCreationForm from "../components/userCreationForm/userCreationForm";
 import Schedule from "../components/schedule/schedule";
+import Summary from "../components/summary/summary";
 
 const AdminDashboard = () => {
   const [showCreateUserForm, setShowCreateUserForm] = useState(false);
@@ -49,7 +50,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div className="admin-dashboard">
       <div className="menu">
         <button onClick={handleCreateUserClick}>Crear Usuario</button>
         <button onClick={handleCalendarClick}>Calendario</button>
@@ -57,9 +58,9 @@ const AdminDashboard = () => {
         <button>Cerrar Sesion</button>
       </div>
       <div className="option">
-        {showCreateUserForm && <UserCreationForm onCreateUser={handleCreateUser} />}
+        {showCreateUserForm && <UserCreationForm onCreateUser={handleCreateUser}/>}
         {showCalendar && <Schedule/>}
-        {showSummary && <p>Aquí va el contenido del Resumen</p>}
+        {showSummary && <Summary/>}
       </div>
     </div>
   );

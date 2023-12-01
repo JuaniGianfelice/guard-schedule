@@ -1,6 +1,6 @@
 import Schedule from "../components/schedule/schedule";
 
-const UserDashboard = () => {
+const VisitDashboard = () => {
   return (
     <div className="user-dashboard">
       <Schedule />
@@ -8,4 +8,4 @@ const UserDashboard = () => {
   );
 }
 
-export default UserDashboard
+export default VisitDashboard

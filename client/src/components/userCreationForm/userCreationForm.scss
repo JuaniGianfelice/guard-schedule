@@ -2,30 +2,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 90%;
+    padding: 0 40%;
 }
 
-.form {
+.creation-form {
     background-color: rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 10px;
 
-    .form-group {
+    .creation-form-group {
         margin-bottom: 10px;
     }
 
-    .form-group label {
+    .creation-form-group label {
         display: block;
         margin-bottom: 5px;
     }
 
-    .form-group input {
+    .creation-form-group input {
         width: 100%;
         padding: 5px;
         margin-bottom: 15px;
         box-sizing: border-box;
     }
 
-    .form-group select {
+    .creation-form-group select {
         width: 100%;
         padding: 5px;
         margin-bottom: 15px;

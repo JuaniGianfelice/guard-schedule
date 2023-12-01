@@ -25,32 +25,18 @@ const UserCreationForm = ({ onCreateUser }) => {
   return (
     <div className="dash">
 
-      <form className="form" onSubmit={handleSubmit}>
-        <label className="form-group">
+      <form className="creation-form" onSubmit={handleSubmit}>
+        <label className="creation-form-group">
           Usuario:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
+          <input type="text" name="name" value={formData.name} onChange={handleChange}/>
         </label>
-        <label className="form-group">
+        <label className="creation-form-group">
           Contraseña:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <input type="password" name="password" value={formData.password} onChange={handleChange}/>
         </label>
-        <label className="form-group">
+        <label className="creation-form-group">
           Rol:
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-          >
+          <select name="role" value={formData.role} onChange={handleChange}>
             <option value="Admin">Admin</option>
             <option value="Coordinador">Coordinador</option>
             <option value="Medico">Médico</option>
