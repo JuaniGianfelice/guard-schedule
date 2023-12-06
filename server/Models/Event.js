@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 
 const EventSchema = mongoose.Schema({
     title: String,
@@ -7,4 +7,4 @@ const EventSchema = mongoose.Schema({
 
 const Event = mongoose.model("Event", EventSchema)
 
-module.exports = Event
+module.exports = Event*/

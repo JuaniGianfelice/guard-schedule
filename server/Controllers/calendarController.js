@@ -1,4 +1,4 @@
-const router = require("express").Router();
+/*const router = require("express").Router();
 const Event = require("../Models/Event");
 
 router.post("/create-event", async (req, res) => {
@@ -13,4 +13,4 @@ router.get("/get-events", async (req, res) => {
 });
 
 module.exports = router;
-
+*/
