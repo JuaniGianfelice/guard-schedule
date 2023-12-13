@@ -1,4 +1,5 @@
 const express = require("express");
+const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -6,8 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 //routes
-app.get("/users", async (req, res) => {
-  const client = 
+app.get("/users", (req, res) => {
   res.send("Hola, Bienvenido");
 });
 

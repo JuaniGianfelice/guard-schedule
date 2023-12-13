@@ -1,7 +1,7 @@
 const express = require("express");
 const {MongoClient} = require("mongodb");
 const { default: mongoose } = require("mongoose");
-const uri = 'mongodb+srv://juanigianfelice:juanigianfelice@schedule-cluster.ffuthzf.mongodb.net/schedule-cluster?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://juanigianfelice:heracross.1555@schedule-cluster.ffuthzf.mongodb.net/?retryWrites=true&w=majority'
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.post('/singup', (req,res) => {
 })
 
 app.get('/users', async (req, res) => {
-  const client = new MongoClient(uri)
+  const client = new MongoClient(URL)
 
   try {
     await client.connect()
