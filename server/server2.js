@@ -1,13 +1,17 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const userRoutes = require ("./routes/users.js")
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+//middleware
+app.use(express.json())
+app.use('/api', userRoutes)
+
 //routes
-app.get("/users", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hola, Bienvenido");
 });
 
