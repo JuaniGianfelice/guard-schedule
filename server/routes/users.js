@@ -1,17 +1,55 @@
 const express = require("express");
 const userSchema = require("../models/user-model");
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-//create user
-router.post("/users", (req, res) => {
-  const user = userSchema(req.body);
-  user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+// Create user
+router.post("/users", async (req, res) => {
+  const { user, password, rol, calendar } = req.body;
+  const generateUserId = uuidv4();
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    const existingUser = await userSchema.findOne({ user });
+
+    if (existingUser) {
+      return res.status(409).json({ message: 'User Already Exists' });
+    }
+
+    const sanitizedUser = user.toLowerCase();
+    const userData = {
+      name: sanitizedUser,
+      user_id: generateUserId,
+      user: sanitizedUser,
+      hashed_password: hashedPassword,
+      rol: rol, 
+      calendario: calendar,
+    };
+
+    const newUser = new userSchema(userData);
+    await newUser.save();
+
+    const token = jwt.sign({ userId: newUser._id, user: sanitizedUser }, process.env.TOKEN_SECRET, {
+      expiresIn: 60 * 24,
+    });
+
+    res.status(201).json({ success: true, token, userId: generateUserId, user: sanitizedUser });
+  } catch (error) {
+    console.error('Error al crear usuario:', error);
+    res.status(500).json({ success: false, message: error.message || "Error interno del servidor al crear usuario.", error: error });
+  }
 });
 
+module.exports = router;
+
+
+
+
+
+/* CRUD
 //get all user
 router.get("/users", (req, res) => {
   userSchema
@@ -48,4 +86,4 @@ router.delete("/users/:id", (req, res) => {
       .catch((error) => res.json({ message: error }));
   });
 
-module.exports = router;
+module.exports = router;*/

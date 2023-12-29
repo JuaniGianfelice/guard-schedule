@@ -1,26 +1,31 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
-const userRoutes = require ("./routes/users.js")
+const userRoutes = require("./routes/users.js");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-//middleware
-app.use(express.json())
-app.use('/api', userRoutes)
+// Middleware
+app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:3000", // Reemplaza con la URL de tu aplicación frontend
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+}));
+app.use('/api', userRoutes);
 
-//routes
+// Routes
 app.get("/", (req, res) => {
   res.send("Hola, Bienvenido");
 });
 
-//mongodb conection
+// MongoDB connection
 mongoose
-  .connect(process.env.DATABASE_URL)
+  .connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Conected to Atlas"))
   .catch((error) => console.error(error));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-
 
