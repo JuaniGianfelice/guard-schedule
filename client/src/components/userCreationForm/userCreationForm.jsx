@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import "./userCreationForm.scss"
+import "./userCreationForm.scss";
+import axios from 'axios';
 
 const UserCreationForm = ({ onCreateUser }) => {
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    user: '',
     password: '',
-    role: 'Medico',
+    rol: '',
+    calendar: '',
   });
 
   const handleChange = (e) => {
@@ -17,18 +18,28 @@ const UserCreationForm = ({ onCreateUser }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onCreateUser(formData);
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/users', formData);
+
+      if (response.data.success) {
+        console.log('Usuario creado con éxito');
+      } else {
+        console.error('Error al crear usuario:', response.data.message || 'Error desconocido');
+      }
+    } catch (error) {
+      console.error('No se pudo crear el usuario:', error.response ? error.response.data.message : error.message || 'Error desconocido');
+    }
   };
 
   return (
     <div className="dash">
-
       <form className="creation-form" onSubmit={handleSubmit}>
         <label className="creation-form-group">
           Usuario:
-          <input type="text" name="name" value={formData.name} onChange={handleChange}/>
+          <input type="text" name="user" value={formData.user} onChange={handleChange}/>
         </label>
         <label className="creation-form-group">
           Contraseña:
@@ -36,10 +47,18 @@ const UserCreationForm = ({ onCreateUser }) => {
         </label>
         <label className="creation-form-group">
           Rol:
-          <select name="role" value={formData.role} onChange={handleChange}>
+          <select name="rol" value={formData.rol} onChange={handleChange}>
             <option value="Admin">Admin</option>
             <option value="Coordinador">Coordinador</option>
             <option value="Medico">Médico</option>
+          </select>
+        </label>
+        <label className="creation-form-group">
+          Calendario:
+          <select name="calendar" value={formData.calendar} onChange={handleChange}>
+            <option value="Admin">Admin</option>
+            <option value="Uti">UTI</option>
+            <option value="Guardia">Guardia</option>
           </select>
         </label>
         <button className="btn-create" type="submit">Crear</button>
