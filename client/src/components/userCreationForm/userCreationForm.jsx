@@ -68,4 +68,3 @@ const UserCreationForm = ({ onCreateUser }) => {
 };
 
 export default UserCreationForm;
-
