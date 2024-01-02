@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:3000", // Reemplaza con la URL de tu aplicación frontend
+  origin: "http://localhost:3000", 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 }));
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 // MongoDB connection
 mongoose
-  .connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DATABASE_URL) //, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Conected to Atlas"))
   .catch((error) => console.error(error));
 
