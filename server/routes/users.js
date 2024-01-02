@@ -47,8 +47,6 @@ module.exports = router;
 
 
 
-
-
 /* CRUD
 //get all user
 router.get("/users", (req, res) => {
@@ -86,4 +84,5 @@ router.delete("/users/:id", (req, res) => {
       .catch((error) => res.json({ message: error }));
   });
 
-module.exports = router;*/
+module.exports = router;
+*/

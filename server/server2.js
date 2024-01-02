@@ -28,4 +28,3 @@ mongoose
   .catch((error) => console.error(error));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-
