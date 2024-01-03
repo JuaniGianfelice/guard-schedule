@@ -16,7 +16,7 @@ router.post("/users", async (req, res) => {
     const existingUser = await userSchema.findOne({ user });
 
     if (existingUser) {
-      return res.status(409).json({ message: 'User Already Exists' });
+      return res.status(409).json({ message: 'El usuario ya existe' });
     }
 
     const sanitizedUser = user.toLowerCase();
@@ -34,9 +34,14 @@ router.post("/users", async (req, res) => {
 
     const token = jwt.sign({ userId: newUser._id, user: sanitizedUser }, process.env.TOKEN_SECRET, {
       expiresIn: 60 * 24,
+    }, (error, token) => {
+      if (error) console.log(error)
+      res.cookie('token', token)
+    res.json({message: "Usuario Creado"})
     });
 
     res.status(201).json({ success: true, token, userId: generateUserId, user: sanitizedUser });
+
   } catch (error) {
     console.error('Error al crear usuario:', error);
     res.status(500).json({ success: false, message: error.message || "Error interno del servidor al crear usuario.", error: error });

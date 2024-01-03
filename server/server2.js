@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const userRoutes = require("./routes/users.js");
+const loginRoutes = require("./routes/login.js")
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -15,15 +16,16 @@ app.use(cors({
   credentials: true,
 }));
 app.use('/api', userRoutes);
+app.use('/api', loginRoutes);
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hola, Bienvenido");
+  res.send("Hi, Welcome");
 });
 
 // MongoDB connection
 mongoose
-  .connect(process.env.DATABASE_URL) //, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DATABASE_URL)
   .then(() => console.log("Conected to Atlas"))
   .catch((error) => console.error(error));
 
