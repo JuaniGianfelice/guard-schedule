@@ -25,7 +25,7 @@ const Home = () => {
       const response = await axios.post('http://localhost:8000/api/login', loginData);
 
       if (response.data.success) {
-        console.log('Inicio de sesión exitoso');
+        console.log("Inicio de sesión exitoso");
 
         // Verificar rol de usuario
         if (response.data.user && response.data.user.rol === 'Admin') {
@@ -34,10 +34,10 @@ const Home = () => {
           navigate('/UserDashboard');
         }
       } else {
-        console.error('Error al iniciar sesión:', response.data.message || 'Error desconocido');
+        console.error("Error al iniciar sesión:", response.data.message || "Error desconocido");
       }
     } catch (error) {
-      console.error('No se pudo iniciar sesión:', error.response ? error.response.data.message : error.message || 'Error desconocido');
+      console.error("No se pudo iniciar sesión:", error.response ? error.response.data.message : error.message || "Error desconocido");
     }
   };
 

@@ -1,36 +1,32 @@
 const express = require("express");
-const {MongoClient} = require("mongodb");
-const { default: mongoose } = require("mongoose");
-const uri = 'mongodb+srv://juanigianfelice:heracross.1555@schedule-cluster.ffuthzf.mongodb.net/?retryWrites=true&w=majority'
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+const userRoutes = require("./routes/users.js");
+const loginRoutes = require("./routes/login.js")
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
-app.get('/', (req,res) => {
-  res.send('Hola')
-})
+// Middleware
+app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+}));
+app.use('/api', userRoutes);
+app.use('/api', loginRoutes);
 
-app.post('/singup', (req,res) => {
-  res.json('Hola')
-})
+// Routes
+app.get("/", (req, res) => {
+  res.send("Hi, Welcome");
+});
 
-app.get('/users', async (req, res) => {
-  const client = new MongoClient(URL)
+// MongoDB connection
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => console.log("Conected to Atlas"))
+  .catch((error) => console.error(error));
 
-  try {
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
-
-    const returnedUsers = await users.find().toArray()
-    res.send(returnedUsers)
-  }
-
-  finally{
-    await client.close()
-  }
-})
-
-
-const PORT = process.env.PORT ||  8000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-

@@ -38,12 +38,12 @@ const AdminDashboard = () => {
       });
 
       if (response.ok) {
-        console.log('Usuario creado exitosamente');
+        console.log("Usuario creado exitosamente");
       } else {
-        console.error('Error al crear usuario');
+        console.error("Error al crear usuario");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     } finally {
       setShowCreateUserForm(false);
     }

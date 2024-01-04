@@ -19,32 +19,30 @@ router.post("/users", async (req, res) => {
       return res.status(409).json({ message: 'El usuario ya existe' });
     }
 
-    const sanitizedUser = user.toLowerCase();
+    const sanitizedUser = user.toLowerCase().trim();
     const userData = {
-      name: sanitizedUser,
       user_id: generateUserId,
       user: sanitizedUser,
       hashed_password: hashedPassword,
-      rol: rol, 
+      rol: rol,
       calendario: calendar,
     };
-
     const newUser = new userSchema(userData);
     await newUser.save();
 
     const token = jwt.sign({ userId: newUser._id, user: sanitizedUser }, process.env.TOKEN_SECRET, {
       expiresIn: 60 * 24,
     }, (error, token) => {
-      if (error) console.log(error)
+      if (error) console.error("Error al crear token", error)
       res.cookie('token', token)
-    res.json({message: "Usuario Creado"})
+      res.json({ message: "Usuario Creado" })
     });
 
     res.status(201).json({ success: true, token, userId: generateUserId, user: sanitizedUser });
 
   } catch (error) {
-    console.error('Error al crear usuario:', error);
-    res.status(500).json({ success: false, message: error.message || "Error interno del servidor al crear usuario.", error: error });
+    console.error("Error al crear usuario:", error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor al crear usuario.'});
   }
 });
 

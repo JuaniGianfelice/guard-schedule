@@ -5,32 +5,42 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-// Login User
+// Login user
 router.post("/login", async (req, res) => {
     const { user, password } = req.body;
 
     try {
-        const existingUser = await userSchema.findOne({ user });
+        console.log("Intento de inicio de sesión:", user);
 
+        const existingUser = await userSchema.findOne({ user: user.trim().toLowerCase() }).lean().exec();
         if (!existingUser) {
-            return res.status(401).json({ success: false, message: 'Usuario no encontrado' });
+            console.log("Usuario no encontrado en la base de datos");
+            return res.status(401).json({ success: false, message: 'Usuario incorrecto' });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, existingUser.hashed_password);
-
-        if (!isPasswordValid) {
-            return res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
+        const passwordMatch = await bcrypt.compare(password, existingUser.hashed_password);
+        if (!passwordMatch) {
+            console.log("Contraseña no coincide");
+            return res.status(401).json({ success: false, message: 'Contraseña incorrecto' });
         }
 
         const token = jwt.sign({ userId: existingUser._id, user: existingUser.user }, process.env.TOKEN_SECRET, {
-            expiresIn: 60 * 24
+            expiresIn: 60 * 24,
         });
 
-        res.status(200).json({ auth: true, success: true, token, userId: existingUser.user_id, user: existingUser.user, message: 'Inicio de sesion exitoso' });
+        res.cookie('token', token);
+        res.json({
+            success: true,
+            token,
+            userId: existingUser.user_id,
+            user: existingUser.user,
+            rol: existingUser.rol,
+        });
+
     } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        res.status(500).json({ success: false, message: 'Error interno del servidor al iniciar sesión.'});
+        console.error("Error al iniciar sesión:", error);
+        res.status(500).json({ success: false, message: "Error interno del servidor al iniciar sesión." });
     }
-})
+});
 
 module.exports = router;

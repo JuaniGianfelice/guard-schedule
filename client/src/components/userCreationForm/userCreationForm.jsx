@@ -25,12 +25,12 @@ const UserCreationForm = ({ onCreateUser }) => {
       const response = await axios.post('http://localhost:8000/api/users', formData);
 
       if (response.data.success) {
-        console.log('Usuario creado con éxito');
+        console.log("Usuario creado con éxito");
       } else {
-        console.error('Error al crear usuario:', response.data.message || 'Error desconocido');
+        console.error("Error al crear usuario:", response.data.message || "Error desconocido");
       }
     } catch (error) {
-      console.error('No se pudo crear el usuario:', error.response ? error.response.data.message : error.message || 'Error desconocido');
+      console.error("No se pudo crear el usuario:", error.response ? error.response.data.message : error.message || 'Error desconocido');
     }
   };
 
