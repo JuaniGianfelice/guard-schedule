@@ -24,7 +24,12 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ success: false, message: 'Contraseña incorrecto' });
         }
 
-        const token = jwt.sign({ userId: existingUser._id, user: existingUser.user }, process.env.TOKEN_SECRET, {
+        const token = jwt.sign({ 
+            userId: existingUser._id,
+            user: existingUser.user,
+            rol: existingUser.rol
+        },
+        process.env.TOKEN_SECRET, {
             expiresIn: 60 * 24,
         });
 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
     user: '',
@@ -27,12 +27,22 @@ const Home = () => {
       if (response.data.success) {
         console.log("Inicio de sesión exitoso");
 
-        // Verificar rol de usuario
-        if (response.data.user && response.data.user.rol === 'Admin') {
-          navigate('/AdminDashboard'); 
-        } else {
-          navigate('/UserDashboard');
+        const userRole = response.data.rol;
+        switch (userRole) {
+          case 'Admin':
+            navigate('/AdminDashboard');
+            break;
+          case 'Coordinador':
+            navigate('/UserDashboard');
+            break;
+          case 'Medico':
+            navigate('/VisitDashboard'); 
+            break;
+          default:
+            navigate('/VisitDashboard');
+            break;
         }
+        
       } else {
         console.error("Error al iniciar sesión:", response.data.message || "Error desconocido");
       }

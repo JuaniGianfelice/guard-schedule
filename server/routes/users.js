@@ -30,7 +30,7 @@ router.post("/users", async (req, res) => {
     const newUser = new userSchema(userData);
     await newUser.save();
 
-    const token = jwt.sign({ userId: newUser._id, user: sanitizedUser }, process.env.TOKEN_SECRET, {
+    const token = jwt.sign({ userId: newUser._id, user: sanitizedUser, rol: rol }, process.env.TOKEN_SECRET, {
       expiresIn: 60 * 24,
     }, (error, token) => {
       if (error) console.error("Error al crear token", error)
@@ -42,7 +42,7 @@ router.post("/users", async (req, res) => {
 
   } catch (error) {
     console.error("Error al crear usuario:", error);
-    res.status(500).json({ success: false, message: 'Error interno del servidor al crear usuario.'});
+    res.status(500).json({ success: false, message: 'Error interno del servidor al crear usuario.' });
   }
 });
 

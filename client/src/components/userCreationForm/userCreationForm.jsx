@@ -39,15 +39,16 @@ const UserCreationForm = ({ onCreateUser }) => {
       <form className="creation-form" onSubmit={handleSubmit}>
         <label className="creation-form-group">
           Usuario:
-          <input type="text" name="user" value={formData.user} onChange={handleChange}/>
+          <input type="text" name="user" value={formData.user} onChange={handleChange} />
         </label>
         <label className="creation-form-group">
           Contraseña:
-          <input type="password" name="password" value={formData.password} onChange={handleChange}/>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} />
         </label>
         <label className="creation-form-group">
           Rol:
           <select name="rol" value={formData.rol} onChange={handleChange}>
+            <option value="" disabled hidden>Seleccionar rol</option>
             <option value="Admin">Admin</option>
             <option value="Coordinador">Coordinador</option>
             <option value="Medico">Médico</option>
@@ -56,6 +57,7 @@ const UserCreationForm = ({ onCreateUser }) => {
         <label className="creation-form-group">
           Calendario:
           <select name="calendar" value={formData.calendar} onChange={handleChange}>
+            <option value="" disabled hidden>Tipo de calendario</option>
             <option value="Admin">Admin</option>
             <option value="Uti">UTI</option>
             <option value="Guardia">Guardia</option>
