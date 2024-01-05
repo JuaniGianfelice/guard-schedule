@@ -1,5 +1,5 @@
-const express = require("express");
-const userSchema = require("../models/user-model");
+const express = require('express');
+const userSchema = require('../Models/userModel');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -25,7 +25,7 @@ router.post("/users", async (req, res) => {
       user: sanitizedUser,
       hashed_password: hashedPassword,
       rol: rol,
-      calendario: calendar,
+      calendar: calendar,
     };
     const newUser = new userSchema(userData);
     await newUser.save();

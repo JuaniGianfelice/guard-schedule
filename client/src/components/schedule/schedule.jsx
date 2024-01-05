@@ -3,21 +3,39 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import AddEventModal from "../modal/modal";
 import { useState, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Schedule = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  
   const calendarRef = useRef(null);
+  const navigate = useNavigate();
 
+  //Agregar Evento
   const onEventAdded = (event) => {
     let calendarApi = calendarRef.current.getApi();
     calendarApi.addEvent(event);
   };
 
-  const logout = () => {
-    window.location.href = "/"
-    //agregar logica una vez creada la base de dato y los usuarios
-  }
+  //Logout
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        console.log("Cierre de sesión exitoso");
+        navigate('/');
+      } else {
+        console.error("Error al cerrar sesión");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className="schedule" >
@@ -41,8 +59,7 @@ const Schedule = () => {
           },
           CloseSesion: {
             text: "Cerrar Sesion",
-            click: () => logout(true),
-            //agregar logica una vez creada la base de dato y los usuarios
+            click: () => handleLogout(true),
           }
         }}
       />
