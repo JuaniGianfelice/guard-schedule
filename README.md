@@ -18,13 +18,13 @@ Guard-Schedule es una aplicación diseñada para cargar las guardias de los méd
   
 2. Inicia el servidor y el cliente en terminales separadas e nstala las dependencias:
 
-   ```bash
-  # Terminal 1 - Inicia el servidor
-  cd server
-  npm i
-  npm start
+    ```bash
+   //Terminal 1 - Inicia el servidor:
+    cd server
+    npm i
+    npm start
 
-  # Terminal 2 - Inicia el cliente
-  cd client
-  npm i
-  npm start
+    Terminal 2 - Inicia el cliente
+    cd client
+    npm i
+    npm start
