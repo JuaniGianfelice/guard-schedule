@@ -8,9 +8,12 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+const maxEvents = 2;
+
 const Schedule = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
+  const [eventCount, setEventCount] = useState(0);
   const calendarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -30,8 +33,9 @@ const Schedule = () => {
         });
 
         if (response.ok) {
-          const eventosData = await response.json();
-          setEvents(eventosData);
+          const eventsData = await response.json();
+          setEvents(eventsData);
+          setEventCount(eventsData.length); // Actualiza el recuento de eventos
         } else {
           console.error("Error al obtener eventos");
         }
@@ -45,8 +49,44 @@ const Schedule = () => {
 
   // Agregar Evento
   const onEventAdded = (event) => {
-    let calendarApi = calendarRef.current.getApi();
-    calendarApi.addEvent(event);
+    if (eventCount < maxEvents) {
+      let calendarApi = calendarRef.current.getApi();
+      calendarApi.addEvent(event);
+
+      // Incrementa el recuento de eventos
+      setEventCount((prevCount) => prevCount + 1);
+      
+      // Guarda el evento en la base de datos (llamada al backend)
+      saveEventToDatabase(event);
+    } else {
+      console.log("No se pueden agregar más eventos");
+    }
+  };
+
+  // Función para guardar el evento en la base de datos
+  const saveEventToDatabase = async (event) => {
+    try {
+      const response = await fetch('http://localhost:8000/api/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('token')}`,
+        },
+        body: JSON.stringify({
+          title: event.title,
+          date: event.start.toISOString(), // Asegúrate de que la propiedad 'start' contiene la fecha
+          calendar: calendarType,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Evento guardado en la base de datos");
+      } else {
+        console.error("Error al guardar el evento en la base de datos");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   // Logout
@@ -95,7 +135,7 @@ const Schedule = () => {
             click: () => handleLogout(true),
           }
         }}
-        events={events} // Muestro evento segun tipo de calendario
+        events={events} // Muestro evento según tipo de calendario
         eventContent={({ event }) => (
           <div>
             <b>{event.title}</b>

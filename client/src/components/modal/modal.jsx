@@ -1,5 +1,3 @@
-// modal.jsx
-
 import { useState } from "react";
 import "./modal.scss";
 import Modal from "react-modal";
@@ -9,13 +7,13 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
   const [selectedProfessional, setSelectedProfessional] = useState("");
   const [date, setDate] = useState(new Date());
 
-  const professionals = ["Profesional1", "Profesional2", "Profesional3", "Profesional4", "Profesional5"];
+  const professionals = ["Fuentes Omar", "Lopez Mario", "Pacheco Luisa", "Parra Carlos", "Rivas Luis"];
 
   const onSubmit = (event) => {
     event.preventDefault();
 
     onEventAdded({
-      title: selectedProfessional, // Usamos "title" en lugar de "professional"
+      title: selectedProfessional,
       date: date.toISOString(),
     });
 

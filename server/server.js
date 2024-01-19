@@ -5,6 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 const userRoutes = require('./routes/users.js');
 const authControllers = require('./Controllers/authControllers.js');
+//const eventRoutes = require('./routes/event.js');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -21,6 +22,7 @@ app.use(cors({
 // Routes
 app.use('/api', userRoutes);
 app.use('/api', authControllers);
+//app.use('/api', eventRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome");
