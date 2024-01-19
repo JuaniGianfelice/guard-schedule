@@ -1,17 +1,21 @@
+// modal.jsx
+
 import { useState } from "react";
 import "./modal.scss";
 import Modal from "react-modal";
 import DateTime from "react-datetime";
 
 const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
-  const [title, setTitle] = useState("");
+  const [selectedProfessional, setSelectedProfessional] = useState("");
   const [date, setDate] = useState(new Date());
+
+  const professionals = ["Profesional1", "Profesional2", "Profesional3", "Profesional4", "Profesional5"];
 
   const onSubmit = (event) => {
     event.preventDefault();
 
     onEventAdded({
-      title: title,
+      title: selectedProfessional, // Usamos "title" en lugar de "professional"
       date: date.toISOString(),
     });
 
@@ -23,7 +27,12 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
       <form onSubmit={onSubmit} className="modal">
         <div className="section">
           <label>Seleccionar Profesional</label>
-          <input placeholder="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <select value={selectedProfessional} onChange={(e) => setSelectedProfessional(e.target.value)}>
+            <option value="" disabled>Seleccionar profesional</option>
+            {professionals.map((professional) => (
+              <option key={professional} value={professional}>{professional}</option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Ingresar Fecha</label>
