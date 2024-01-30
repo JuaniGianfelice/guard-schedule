@@ -12,9 +12,11 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
   const onSubmit = (event) => {
     event.preventDefault();
 
+    const formattedDate = date instanceof Date ? date.toISOString() : date;
+
     onEventAdded({
       title: selectedProfessional,
-      date: date.toISOString(),
+      date: formattedDate,
     });
 
     onClose();

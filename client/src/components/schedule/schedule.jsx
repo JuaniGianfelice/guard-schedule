@@ -1,5 +1,3 @@
-// schedule.jsx
-
 import "./schedule.scss";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -8,12 +6,9 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-const maxEvents = 2;
-
 const Schedule = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
-  const [eventCount, setEventCount] = useState(0);
   const calendarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -35,7 +30,6 @@ const Schedule = () => {
         if (response.ok) {
           const eventsData = await response.json();
           setEvents(eventsData);
-          setEventCount(eventsData.length); // Actualiza el recuento de eventos
         } else {
           console.error("Error al obtener eventos");
         }
@@ -49,23 +43,15 @@ const Schedule = () => {
 
   // Agregar Evento
   const onEventAdded = (event) => {
-    if (eventCount < maxEvents) {
-      let calendarApi = calendarRef.current.getApi();
-      calendarApi.addEvent(event);
-
-      // Incrementa el recuento de eventos
-      setEventCount((prevCount) => prevCount + 1);
-      
-      // Guarda el evento en la base de datos (llamada al backend)
-      saveEventToDatabase(event);
-    } else {
-      console.log("No se pueden agregar más eventos");
-    }
+    let calendarApi = calendarRef.current.getApi();
+    calendarApi.addEvent(event);
+    saveEventToDatabase(event);
   };
 
   // Función para guardar el evento en la base de datos
   const saveEventToDatabase = async (event) => {
     try {
+      console.log("Token:", Cookies.get('token'));
       const response = await fetch('http://localhost:8000/api/events', {
         method: 'POST',
         headers: {
@@ -74,7 +60,7 @@ const Schedule = () => {
         },
         body: JSON.stringify({
           title: event.title,
-          date: event.start.toISOString(), // Asegúrate de que la propiedad 'start' contiene la fecha
+          date: event.start && typeof event.start.toISOString === 'function' ? event.start.toISOString() : event.start,
           calendar: calendarType,
         }),
       });
@@ -88,6 +74,7 @@ const Schedule = () => {
       console.error("Error:", error);
     }
   };
+
 
   // Logout
   const handleLogout = async () => {

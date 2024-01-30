@@ -9,10 +9,6 @@ const eventSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
-  calendar: {
-    type: String,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model('Event', eventSchema);
