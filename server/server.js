@@ -1,36 +1,41 @@
-const express = require("express");
-const {MongoClient} = require("mongodb");
-const { default: mongoose } = require("mongoose");
-const uri = 'mongodb+srv://juanigianfelice:heracross.1555@schedule-cluster.ffuthzf.mongodb.net/?retryWrites=true&w=majority'
+const express = require('express');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+require('dotenv').config();
+const userRoutes = require('./routes/users.js');
+const authControllers = require('./Controllers/authControllers.js')
+const authMiddlewares = require('./middlewares/authMiddlewares.js');
+const eventRoutes = require('./routes/event.js');
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
-app.get('/', (req,res) => {
-  res.send('Hola')
-})
-
-app.post('/singup', (req,res) => {
-  res.json('Hola')
-})
-
-app.get('/users', async (req, res) => {
-  const client = new MongoClient(URL)
-
-  try {
-    await client.connect()
-    const database = client.db('app-data')
-    const users = database.collection('users')
-
-    const returnedUsers = await users.find().toArray()
-    res.send(returnedUsers)
-  }
-
-  finally{
-    await client.close()
-  }
-})
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+}));
+app.use(authMiddlewares.authenticateUser);
 
 
-const PORT = process.env.PORT ||  8000;
+// Routes
+app.use('/api', userRoutes);
+app.use('/api', authControllers);
+app.use('/api', eventRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Welcome");
+});
+
+// MongoDB connection
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => console.log("Connected to Atlas"))
+  .catch((error) => console.error(error));
+
+// Start Server
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-

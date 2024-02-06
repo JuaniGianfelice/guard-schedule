@@ -25,12 +25,12 @@ const UserCreationForm = ({ onCreateUser }) => {
       const response = await axios.post('http://localhost:8000/api/users', formData);
 
       if (response.data.success) {
-        console.log('Usuario creado con éxito');
+        console.log("Usuario creado con éxito");
       } else {
-        console.error('Error al crear usuario:', response.data.message || 'Error desconocido');
+        console.error("Error al crear usuario:", response.data.message || "Error desconocido");
       }
     } catch (error) {
-      console.error('No se pudo crear el usuario:', error.response ? error.response.data.message : error.message || 'Error desconocido');
+      console.error("No se pudo crear el usuario:", error.response ? error.response.data.message : error.message || 'Error desconocido');
     }
   };
 
@@ -39,15 +39,16 @@ const UserCreationForm = ({ onCreateUser }) => {
       <form className="creation-form" onSubmit={handleSubmit}>
         <label className="creation-form-group">
           Usuario:
-          <input type="text" name="user" value={formData.user} onChange={handleChange}/>
+          <input type="text" name="user" value={formData.user} onChange={handleChange} />
         </label>
         <label className="creation-form-group">
           Contraseña:
-          <input type="password" name="password" value={formData.password} onChange={handleChange}/>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} />
         </label>
         <label className="creation-form-group">
           Rol:
           <select name="rol" value={formData.rol} onChange={handleChange}>
+            <option value="" disabled hidden>Seleccionar rol</option>
             <option value="Admin">Admin</option>
             <option value="Coordinador">Coordinador</option>
             <option value="Medico">Médico</option>
@@ -56,6 +57,7 @@ const UserCreationForm = ({ onCreateUser }) => {
         <label className="creation-form-group">
           Calendario:
           <select name="calendar" value={formData.calendar} onChange={handleChange}>
+            <option value="" disabled hidden>Tipo de calendario</option>
             <option value="Admin">Admin</option>
             <option value="Uti">UTI</option>
             <option value="Guardia">Guardia</option>
