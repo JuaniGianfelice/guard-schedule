@@ -1,26 +1,39 @@
+import React, { useState, useRef, useEffect } from "react";
 import "./schedule.scss";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import AddEventModal from "../modal/modal";
-import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import moment from 'moment';
 
 const Schedule = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [events, setEvents] = useState([]);
   const calendarRef = useRef(null);
   const navigate = useNavigate();
 
-  // Agregar Evento
+  // Cargar eventos al inicializar el componente
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/events");
+        if (response.ok) {
+          const data = await response.json();
+          setEvents(data.events);
+        } else {
+          console.error("Error al obtener eventos:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error al obtener eventos:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  // Agregar Eventos
   const onEventAdded = (event) => {
-    let calendarApi = calendarRef.current.getApi();
-    calendarApi.addEvent({
-      date: moment(event.date).format("YYYY-MM-DD"),
-      title: event.title
-    });
+    setEvents([...events, event]);
   };
-
-
 
   // Logout
   const handleLogout = async () => {
@@ -57,7 +70,6 @@ const Schedule = () => {
           center: "title",
           right: "today prev,next CloseSesion",
         }}
-        weekNumbersWithinDays={5}
         customButtons={{
           Add: {
             text: "Agregar Guardia",
@@ -68,6 +80,7 @@ const Schedule = () => {
             click: () => handleLogout(true),
           },
         }}
+        events={events}
         eventContent={({ event }) => (
           <div>
             <b>{event.title}</b>

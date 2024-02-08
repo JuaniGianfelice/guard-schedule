@@ -20,4 +20,15 @@ router.post("/events", async (req, res) => {
   }
 });
 
+// Get events
+router.get("/events", async (req, res) => {
+  try {
+    const events = await eventSchema.find();
+    res.status(200).json({ success: true, events: events });
+  } catch (error) {
+    console.error("Error al obtener eventos:", error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor al obtener eventos.' });
+  }
+});
+
 module.exports = router;
