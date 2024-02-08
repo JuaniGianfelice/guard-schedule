@@ -2,7 +2,7 @@ const express = require('express');
 const userSchema = require('../Models/userModel');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { generateToken } = require('../libs/jwt');
 
 const router = express.Router();
 
@@ -30,14 +30,8 @@ router.post("/users", async (req, res) => {
     const newUser = new userSchema(userData);
     await newUser.save();
 
-    const token = jwt.sign({ userId: newUser._id, user: sanitizedUser, rol: rol }, process.env.TOKEN_SECRET, {
-      expiresIn: 60 * 24,
-    }, (error, token) => {
-      if (error) console.error("Error al crear token", error)
-      res.cookie('token', token)
-      res.json({ message: "Usuario Creado" })
-    });
-
+    const token = generateToken({ userId: newUser._id, user: sanitizedUser, rol: rol }); // Generamos el token JWT
+    res.cookie('token', token); // Establecemos el token en una cookie
     res.status(201).json({ success: true, token, userId: generateUserId, user: sanitizedUser });
 
   } catch (error) {
@@ -50,7 +44,7 @@ module.exports = router;
 
 
 
-/* CRUD
+/* User CRUD
 //get all user
 router.get("/users", (req, res) => {
   userSchema

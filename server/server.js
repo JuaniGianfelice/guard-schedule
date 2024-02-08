@@ -4,9 +4,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 require('dotenv').config();
 const userRoutes = require('./routes/users.js');
-const authControllers = require('./Controllers/authControllers.js')
-const authMiddlewares = require('./middlewares/authMiddlewares.js');
-const eventRoutes = require('./routes/event.js');
+const authControllers = require('./controllers/authControllers.js')
+const eventRoutes = require('./routes/events.js');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -19,8 +18,6 @@ app.use(cors({
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 }));
-app.use(authMiddlewares.authenticateUser);
-
 
 // Routes
 app.use('/api', userRoutes);
