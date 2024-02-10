@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
             userId: existingUser._id,
             user: existingUser.user,
             rol: existingUser.rol,
-            calendar: existingUser.calendar
+            calendar_type: existingUser.calendar_type
         },
             process.env.TOKEN_SECRET, {
             expiresIn: 60 * 24,
@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
             userId: existingUser.user_id,
             user: existingUser.user,
             rol: existingUser.rol,
-            calendar: existingUser.calendar,
+            calendar_type: existingUser.calendar_type,
         });
 
     } catch (error) {

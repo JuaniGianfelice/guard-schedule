@@ -7,7 +7,7 @@ const UserCreationForm = ({ onCreateUser }) => {
     user: "",
     password: "",
     rol: "",
-    calendar: "",
+    calendar_type: "",
   });
 
   const handleChange = (e) => {
@@ -79,8 +79,8 @@ const UserCreationForm = ({ onCreateUser }) => {
         <label className="creation-form-group">
           Calendario:
           <select
-            name="calendar"
-            value={formData.calendar}
+            name="calendar_type"
+            value={formData.calendar_type}
             onChange={handleChange}
           >
             <option value="" disabled hidden>
