@@ -1,21 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./schedule.scss";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import AddEventModal from "../modal/modal";
 import { useNavigate } from "react-router-dom";
 
-const Schedule = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+const Schedule = ({ type }) => {
   const [events, setEvents] = useState([]);
-  const calendarRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
   // Cargar eventos al inicializar el componente
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/events");
+        const response = await fetch(`http://localhost:8000/api/${type}/events`);
         if (response.ok) {
           const data = await response.json();
           setEvents(data.events);
@@ -28,11 +27,28 @@ const Schedule = () => {
     };
 
     fetchEvents();
-  }, []);
+  }, [type]);
 
   // Agregar Eventos
-  const onEventAdded = (event) => {
-    setEvents([...events, event]);
+  const onEventAdded = async (event) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/${type}/events`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(event),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setEvents([...events, data.event]);
+      } else {
+        console.error("Error al agregar evento:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error al agregar evento:", error);
+    }
   };
 
   // Logout
@@ -59,7 +75,6 @@ const Schedule = () => {
   return (
     <div className="schedule">
       <FullCalendar
-        ref={calendarRef}
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         weekNumberCalculation="ISO"
@@ -92,6 +107,7 @@ const Schedule = () => {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onEventAdded={(event) => onEventAdded(event)}
+        type={type}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 /*!
-FullCalendar Core v6.1.9
+FullCalendar Core v6.1.10
 Docs & License: https://fullcalendar.io
 (c) 2023 Adam Shaw
 */
@@ -1567,6 +1567,7 @@ var FullCalendar = (function (exports) {
         // (can't be part of plugin system b/c must be provided at runtime)
         handleCustomRendering: identity,
         customRenderingMetaMap: identity,
+        customRenderingReplaces: Boolean,
     };
     // do NOT give a type here. need `typeof BASE_OPTION_DEFAULTS` to give real results.
     // raw values.
@@ -5198,7 +5199,9 @@ var FullCalendar = (function (exports) {
             this.queuedDomNodes = [];
             this.currentDomNodes = [];
             this.handleEl = (el) => {
-                if (!hasCustomRenderingHandler(this.props.generatorName, this.context.options)) {
+                const { options } = this.context;
+                const { generatorName } = this.props;
+                if (!options.customRenderingReplaces || !hasCustomRenderingHandler(generatorName, options)) {
                     this.updateElRef(el);
                 }
             };
@@ -5298,7 +5301,9 @@ var FullCalendar = (function (exports) {
     });
     // Util
     /*
-    Does UI-framework provide custom way of rendering?
+    Does UI-framework provide custom way of rendering that does not use Preact VDOM
+    AND does the calendar's options define custom rendering?
+    AKA. Should we NOT render the default content?
     */
     function hasCustomRenderingHandler(generatorName, options) {
         var _a;
@@ -5334,6 +5339,9 @@ var FullCalendar = (function (exports) {
                 this.el = el;
                 if (this.props.elRef) {
                     setRef(this.props.elRef, el);
+                    if (el && this.didMountMisfire) {
+                        this.componentDidMount();
+                    }
                 }
             };
         }
@@ -5356,7 +5364,12 @@ var FullCalendar = (function (exports) {
         }
         componentDidMount() {
             var _a, _b;
-            (_b = (_a = this.props).didMount) === null || _b === void 0 ? void 0 : _b.call(_a, Object.assign(Object.assign({}, this.props.renderProps), { el: this.el }));
+            if (this.el) {
+                (_b = (_a = this.props).didMount) === null || _b === void 0 ? void 0 : _b.call(_a, Object.assign(Object.assign({}, this.props.renderProps), { el: this.el }));
+            }
+            else {
+                this.didMountMisfire = true;
+            }
         }
         componentWillUnmount() {
             var _a, _b;
@@ -9329,7 +9342,7 @@ var FullCalendar = (function (exports) {
                     if (isPressed) {
                         buttonClasses.push(theme.getClass('buttonActive'));
                     }
-                    children.push(y("button", { type: "button", title: typeof buttonHint === 'function' ? buttonHint(props.navUnit) : buttonHint, disabled: isDisabled, "aria-pressed": isPressed, className: buttonClasses.join(' '), onClick: buttonClick }, buttonText || (buttonIcon ? y("span", { className: buttonIcon }) : '')));
+                    children.push(y("button", { type: "button", title: typeof buttonHint === 'function' ? buttonHint(props.navUnit) : buttonHint, disabled: isDisabled, "aria-pressed": isPressed, className: buttonClasses.join(' '), onClick: buttonClick }, buttonText || (buttonIcon ? y("span", { className: buttonIcon, role: "img" }) : '')));
                 }
             }
             if (children.length > 1) {
@@ -9819,7 +9832,7 @@ var FullCalendar = (function (exports) {
         return sliceEventStore(props.eventStore, props.eventUiBases, props.dateProfile.activeRange, allDay ? props.nextDayThreshold : null).fg;
     }
 
-    const version = '6.1.9';
+    const version = '6.1.10';
 
     exports.Calendar = Calendar;
     exports.Internal = internal;

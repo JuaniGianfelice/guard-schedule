@@ -1,11 +1,12 @@
+// modal.jsx
 import { useState } from "react";
 import "./modal.scss";
 import Modal from "react-modal";
 import DateTime from "react-datetime";
 import axios from "axios";
-import moment from 'moment'; // Importar moment.js para formatear la fecha
+import moment from 'moment';
 
-const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
+const AddEventModal = ({ isOpen, onClose, onEventAdded, type }) => {
   const [date, setDate] = useState(new Date());
   const [formData, setFormData] = useState({
     title: "",
@@ -34,10 +35,10 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/events",
+        `http://localhost:8000/api/${type}/events`,
         {
           title: formData.title,
-          date: formattedDate, // Enviar la fecha formateada al backend
+          date: formattedDate,
         }
       );
 

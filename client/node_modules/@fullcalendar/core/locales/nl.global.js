@@ -1,5 +1,5 @@
 /*!
-FullCalendar Core v6.1.9
+FullCalendar Core v6.1.10
 Docs & License: https://fullcalendar.io
 (c) 2023 Adam Shaw
 */
@@ -20,7 +20,7 @@ Docs & License: https://fullcalendar.io
             month: 'Maand',
             week: 'Week',
             day: 'Dag',
-            list: 'Agenda',
+            list: 'Lijst',
         },
         allDayText: 'Hele dag',
         moreLinkText: 'extra',
