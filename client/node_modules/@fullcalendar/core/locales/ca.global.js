@@ -1,5 +1,5 @@
 /*!
-FullCalendar Core v6.1.9
+FullCalendar Core v6.1.10
 Docs & License: https://fullcalendar.io
 (c) 2023 Adam Shaw
 */
@@ -16,7 +16,7 @@ Docs & License: https://fullcalendar.io
             prev: 'Anterior',
             next: 'Següent',
             today: 'Avui',
-            year: 'Curs',
+            year: 'Any',
             month: 'Mes',
             week: 'Setmana',
             day: 'Dia',

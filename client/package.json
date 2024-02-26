@@ -5,8 +5,10 @@
   "proxy": null,
   "dependencies": {
     "@fullcalendar/core": "^6.1.9",
-    "@fullcalendar/daygrid": "^6.1.9",
-    "@fullcalendar/react": "^6.1.9",
+    "@fullcalendar/daygrid": "^6.1.10",
+    "@fullcalendar/list": "^6.1.10",
+    "@fullcalendar/react": "^6.1.10",
+    "@fullcalendar/timegrid": "^6.1.10",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,7 +18,7 @@
     "react-datetime": "^3.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.19.0",
+    "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
     "sass": "^1.69.2",
     "web-vitals": "^2.1.4"

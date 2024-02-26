@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   origin: "http://localhost:3000",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   credentials: true,
 }));
 
@@ -31,8 +31,7 @@ app.get("/", (req, res) => {
 });
 
 // MongoDB connection
-mongoose
-  .connect(process.env.DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to Atlas"))
   .catch((error) => console.error(error));
 

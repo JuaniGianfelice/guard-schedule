@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
     type: String,
     require:true
   },
-  calendar_type:{
+  calendar_type:{ 
     type: String,
     require:true
   },
