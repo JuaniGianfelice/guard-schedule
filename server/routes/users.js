@@ -2,13 +2,13 @@ const express = require('express');
 const userSchema = require('../Models/userModel');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { generateToken } = require('../libs/jwt');
 
 const router = express.Router();
 
 // Create user
 router.post("/users", async (req, res) => {
-  const { user, password, rol, calendar } = req.body;
+  const { user, password, rol, calendar_type } = req.body;
   const generateUserId = uuidv4();
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,19 +25,13 @@ router.post("/users", async (req, res) => {
       user: sanitizedUser,
       hashed_password: hashedPassword,
       rol: rol,
-      calendar: calendar,
+      calendar_type: calendar_type,
     };
     const newUser = new userSchema(userData);
     await newUser.save();
 
-    const token = jwt.sign({ userId: newUser._id, user: sanitizedUser, rol: rol }, process.env.TOKEN_SECRET, {
-      expiresIn: 60 * 24,
-    }, (error, token) => {
-      if (error) console.error("Error al crear token", error)
-      res.cookie('token', token)
-      res.json({ message: "Usuario Creado" })
-    });
-
+    const token = generateToken({ userId: newUser._id, user: sanitizedUser, rol: rol }); // Generamos el token JWT
+    res.cookie('token', token); // Establecemos el token en una cookie
     res.status(201).json({ success: true, token, userId: generateUserId, user: sanitizedUser });
 
   } catch (error) {
@@ -50,7 +44,7 @@ module.exports = router;
 
 
 
-/* CRUD
+/* User CRUD
 //get all user
 router.get("/users", (req, res) => {
   userSchema
@@ -71,9 +65,9 @@ router.get("/users/:id", (req, res) => {
 //update a user
 router.put("/users/:id", (req, res) => {
   const { id } = req.params;
-  const { name, hashed_password, rol, calendar } = req.body;
+  const { name, hashed_password, rol, calendar_type } = req.body;
   userSchema
-    .updateOne({ _id: id }, { $set: { name, hashed_password, rol, calendar } })
+    .updateOne({ _id: id }, { $set: { name, hashed_password, rol, calendar_type } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });

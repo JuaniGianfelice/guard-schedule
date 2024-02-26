@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
   user:{
     type: String,
-    required: true
+    required: true,
+    trim: true    
   },
   hashed_password:{
     type: String,
@@ -13,7 +14,7 @@ const userSchema = mongoose.Schema({
     type: String,
     require:true
   },
-  calendar:{
+  calendar_type:{ 
     type: String,
     require:true
   },

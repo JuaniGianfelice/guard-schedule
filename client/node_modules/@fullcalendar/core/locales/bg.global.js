@@ -1,5 +1,5 @@
 /*!
-FullCalendar Core v6.1.9
+FullCalendar Core v6.1.10
 Docs & License: https://fullcalendar.io
 (c) 2023 Adam Shaw
 */
@@ -10,7 +10,7 @@ Docs & License: https://fullcalendar.io
         code: 'bg',
         week: {
             dow: 1,
-            doy: 7, // The week that contains Jan 1st is the first week of the year.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
         },
         buttonText: {
             prev: 'назад',
