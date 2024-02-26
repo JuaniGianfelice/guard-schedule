@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../index.scss";
 import UserCreationForm from "../components/userCreationForm/userCreationForm";
-import Schedule from "../components/schedule/schedule";
+import ScheduleUti from "../components/schedule/scheduleUti";
+import ScheduleGuard from "../components/schedule/scheduleGuard";
 import Summary from "../components/summary/summary";
 import { useNavigate } from 'react-router-dom';
 
@@ -82,7 +83,8 @@ const AdminDashboard = () => {
       </div>
       <div className="option">
         {showCreateUserForm && <UserCreationForm onCreateUser={handleCreateUser}/>}
-        {showCalendar && <Schedule/>}
+        {showCalendar && <ScheduleGuard/>}
+        {showCalendar && <ScheduleUti/>}
         {showSummary && <Summary/>}
       </div>
     </div>

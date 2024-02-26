@@ -33,7 +33,15 @@ const Home = () => {
             navigate('/AdminDashboard');
             break;
           case 'Coordinador':
-            navigate('/UserDashboard');
+            const userCalendar = response.data.calendar_type
+            switch (userCalendar) {
+              case 'Guardia':
+                navigate('/GuardDashboard');
+                break;
+              case 'Uti':
+                navigate('/UtiDashboard');
+                break;
+            }            
             break;
           case 'Medico':
             navigate('/VisitDashboard'); 
