@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 const userRoutes = require('./routes/users.js');
 const authControllers = require('./controllers/authControllers.js')
-const eventUtiRoutes = require('./routes/eventsUti.js');
+const eventUtiRoutes = require('./routes/eventsUti.js'); //nuevo evento
 const eventGuardRoutes = require('./routes/eventsGuard.js')
 
 const app = express();
