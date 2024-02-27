@@ -2,7 +2,7 @@ const express = require('express');
 const eventSchema = require('../Models/eventGuardModel');
 const router = express.Router();
 
-// Create event
+// Crear evento
 router.post("/eventsGuard", async (req, res) => {
   const { title, date } = req.body;
 
@@ -20,7 +20,7 @@ router.post("/eventsGuard", async (req, res) => {
   }
 });
 
-// Get events
+// Traer eventos
 router.get("/eventsGuard", async (req, res) => {
   try {
     const events = await eventSchema.find();

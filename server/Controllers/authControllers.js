@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-// Login user
+// Login
 router.post("/login", async (req, res) => {
     const { user, password } = req.body;
 
@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// Logout user
+// Logout
 router.post("/logout", (req, res) => {
     res.clearCookie('token');
     res.json({ success: true, message: 'Cierre de sesión exitoso' });

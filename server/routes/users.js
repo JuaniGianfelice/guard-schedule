@@ -6,7 +6,7 @@ const { generateToken } = require('../libs/jwt');
 
 const router = express.Router();
 
-// Create user
+// Crear usuario
 router.post("/users", async (req, res) => {
   const { user, password, rol, calendar_type } = req.body;
   const generateUserId = uuidv4();
@@ -30,8 +30,8 @@ router.post("/users", async (req, res) => {
     const newUser = new userSchema(userData);
     await newUser.save();
 
-    const token = generateToken({ userId: newUser._id, user: sanitizedUser, rol: rol }); // Generamos el token JWT
-    res.cookie('token', token); // Establecemos el token en una cookie
+    const token = generateToken({ userId: newUser._id, user: sanitizedUser, rol: rol }); // Genera el token JWT
+    res.cookie('token', token); // Establece el token en una cookie
     res.status(201).json({ success: true, token, userId: generateUserId, user: sanitizedUser });
 
   } catch (error) {
@@ -41,45 +41,3 @@ router.post("/users", async (req, res) => {
 });
 
 module.exports = router;
-
-
-
-/* User CRUD
-//get all user
-router.get("/users", (req, res) => {
-  userSchema
-    .find()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
-
-//get a user
-router.get("/users/:id", (req, res) => {
-  const { id } = req.params;
-  userSchema
-    .findById(id)
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
-
-//update a user
-router.put("/users/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, hashed_password, rol, calendar_type } = req.body;
-  userSchema
-    .updateOne({ _id: id }, { $set: { name, hashed_password, rol, calendar_type } })
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
-
-//delete a user
-router.delete("/users/:id", (req, res) => {
-    const { id } = req.params;
-    userSchema
-      .deleteOne({ _id: id })
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
-  });
-
-module.exports = router;
-*/
