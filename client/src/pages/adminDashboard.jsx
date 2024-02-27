@@ -61,7 +61,7 @@ const AdminDashboard = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (response.ok) {
         console.log("Cierre de sesión exitoso");
         navigate('/');
@@ -75,17 +75,20 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <div className="menu">
-        <button onClick={handleCreateUserClick}>Crear Usuario</button>
-        <button onClick={handleCalendarClick}>Calendario</button>
-        <button onClick={handleSummaryClick}>Resumen</button>
-        <button onClick={handleLogout}>Cerrar Sesión</button>
-      </div>
-      <div className="option">
-        {showCreateUserForm && <UserCreationForm onCreateUser={handleCreateUser}/>}
-        {showCalendar && <ScheduleGuard/>}
-        {showCalendar && <ScheduleUti/>}
-        {showSummary && <Summary/>}
+      <div className="general">
+        <div className="menu">
+          <button onClick={handleCreateUserClick}>Crear Usuario</button>
+          <button onClick={handleCalendarClick}>Calendario</button>
+          <button onClick={handleSummaryClick}>Resumen</button>
+          <button onClick={handleLogout}>Cerrar Sesión</button>
+        </div>
+
+        <div className="option">
+          {showCreateUserForm && <UserCreationForm onCreateUser={handleCreateUser} />}
+          {showSummary && <Summary />}
+          {showCalendar && <ScheduleGuard />}
+          {showCalendar && <ScheduleUti />}
+        </div>
       </div>
     </div>
   );

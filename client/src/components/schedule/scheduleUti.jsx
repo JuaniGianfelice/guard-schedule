@@ -58,6 +58,8 @@ const ScheduleUti = () => {
 
   return (
     <div className="schedule">
+      <h1>Calendario de UTI</h1> 
+
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin]}

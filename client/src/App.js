@@ -1,5 +1,5 @@
 import Home from './pages/home'
-import UtiDashboard from './pages/UtiDashboard'
+import UtiDashboard from './pages/utiDashboard'
 import GuardDashboard from './pages/guardDashboard'
 import AdminDashboard from './pages/adminDashboard'
 import VisitDashboard from './pages/visitDashboard'

@@ -58,6 +58,8 @@ const ScheduleGuard = () => {
 
   return (
     <div className="schedule">
+      <h1>Calendario de GUARDIA</h1>
+
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin]}

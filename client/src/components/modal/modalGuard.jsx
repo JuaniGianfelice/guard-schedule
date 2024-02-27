@@ -61,36 +61,40 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose}>
-      <form onSubmit={handleSubmit} className="modal">
-        <div className="section">
-          <label>Seleccionar Profesional</label>
-          <select
-            value={formData.title}
-            name="title"
-            onChange={handleChange}
-          >
-            <option value="" disabled>
-              Seleccionar profesional
-            </option>
-            {professionals.map((professional) => (
-              <option key={professional} value={professional}>
-                {professional}
+      <button className="close" onClick={onClose}>x</button>
+      <form onSubmit={handleSubmit} className="modal-form">
+        <div className="form">
+          <label>Profesional</label>
+          <div className="option">
+            <select
+              value={formData.title}
+              name="title"
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                Seleccionar profesional
               </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Ingresar Fecha</label>
+              {professionals.map((professional) => (
+                <option key={professional} value={professional}>
+                  {professional}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label>Ingresar Fecha</label>
+          </div>
           <DateTime
             value={date}
             onChange={(newDate) => setDate(newDate)}
             dateFormat="DD-MM-YYYY"
             timeFormat={false}
+            className="option"
           />
+          <button type="submit" className="btn">Agregar</button>
         </div>
-        <button type="submit">Agregar</button>
       </form>
-    </Modal>
+    </Modal >
   );
 };
 

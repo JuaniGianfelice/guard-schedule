@@ -41,6 +41,9 @@ const Home = () => {
               case 'Uti':
                 navigate('/UtiDashboard');
                 break;
+              default:
+                navigate('/VisitDashboard');
+                break;
             }            
             break;
           case 'Medico':

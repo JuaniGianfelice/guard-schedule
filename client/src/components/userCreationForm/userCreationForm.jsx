@@ -20,6 +20,15 @@ const UserCreationForm = ({ onCreateUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //Validar Constraseña
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden");
+        return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/users",
@@ -56,15 +65,27 @@ const UserCreationForm = ({ onCreateUser }) => {
             onChange={handleChange}
           />
         </label>
+
         <label className="creation-form-group">
           Contraseña:
           <input
             type="password"
             name="password"
+            id="password"
             value={formData.password}
             onChange={handleChange}
           />
         </label>
+
+        <label className="creation-form-group">
+          Confirmar Contraseña:
+          <input
+            type="password"
+            name="password"
+            id="confirm-password"
+          />
+        </label>
+
         <label className="creation-form-group">
           Rol:
           <select name="rol" value={formData.rol} onChange={handleChange}>
