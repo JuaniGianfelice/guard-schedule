@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const AdminDashboard = () => {
+  const BeURL = process.env.REACT_APP_BE_URL;
   const [showCreateUserForm, setShowCreateUserForm] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/logout', {
+      const response = await fetch(`${BeURL}/api/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

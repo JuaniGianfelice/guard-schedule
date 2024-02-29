@@ -3,6 +3,7 @@ import "./userCreationForm.scss";
 import axios from "axios";
 
 const UserCreationForm = ({ onCreateUser }) => {
+  const BeURL = process.env.REACT_APP_BE_URL;
   const [formData, setFormData] = useState({
     user: "",
     password: "",
@@ -31,7 +32,7 @@ const UserCreationForm = ({ onCreateUser }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/users",
+        `${BeURL}/api/users`,
         formData
       );
 

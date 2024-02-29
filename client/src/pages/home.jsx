@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const Home = () => {
+
+  const BeURL = process.env.REACT_APP_BE_URL;
+
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
@@ -22,7 +24,7 @@ const Home = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/api/login', loginData);
+      const response = await axios.post(`${BeURL}/api/login`, loginData);
 
       if (response.data.success) {
         console.log("Inicio de sesión exitoso");

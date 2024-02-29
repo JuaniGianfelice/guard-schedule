@@ -6,6 +6,7 @@ import axios from "axios";
 import moment from 'moment';
 
 const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
+  const BeURL = process.env.REACT_APP_BE_URL;
   const [date, setDate] = useState(new Date());
   const [formData, setFormData] = useState({
     title: "",
@@ -34,7 +35,7 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/eventsGuard",
+        `${BeURL}/api/eventsGuard`,
         {
           title: formData.title,
           date: formattedDate, // Enviar la fecha formateada al backend

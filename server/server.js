@@ -9,7 +9,7 @@ const eventUtiRoutes = require('./routes/eventsUti.js');
 const eventGuardRoutes = require('./routes/eventsGuard.js')
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8252;
 
 // Middleware
 app.use(express.json());

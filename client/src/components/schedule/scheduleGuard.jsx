@@ -6,6 +6,7 @@ import AddEventModal from "../modal/modalGuard";
 import { useNavigate } from "react-router-dom";
 
 const ScheduleGuard = () => {
+  const BeURL = process.env.REACT_APP_BE_URL;
   const [modalOpen, setModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const calendarRef = useRef(null);
@@ -15,7 +16,7 @@ const ScheduleGuard = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/eventsGuard");
+        const response = await fetch(`${BeURL}/api/eventsGuard`);
         if (response.ok) {
           const data = await response.json();
           setEvents(data.events);
@@ -38,7 +39,7 @@ const ScheduleGuard = () => {
   // Logout
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/logout", {
+      const response = await fetch(`${BeURL}/api/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
