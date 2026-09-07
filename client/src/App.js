@@ -1,3 +1,4 @@
+import Landing from './pages/landing'
 import Home from './pages/home'
 import UtiDashboard from './pages/UtiDashboard'
 import GuardDashboard from './pages/guardDashboard'
@@ -12,7 +13,8 @@ const App = () => {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path = "/" element = {<Home/>}/>
+      <Route path = "/" element = {<Landing/>}/>
+      <Route path = "/home" element = {<Home/>}/>
       <Route path = "/utidashboard" element = {<UtiDashboard/>}/>
       <Route path = "/guarddashboard" element = {<GuardDashboard/>}/>
       <Route path = "/admindashboard" element = {<AdminDashboard/>}/>
