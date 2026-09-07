@@ -3,7 +3,6 @@ import "../index.scss";
 import UserCreationForm from "../components/userCreationForm/userCreationForm";
 import ScheduleUti from "../components/schedule/scheduleUti";
 import ScheduleGuard from "../components/schedule/scheduleGuard";
-import Summary from "../components/summary/summary";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -11,30 +10,21 @@ const AdminDashboard = () => {
   const BeURL = process.env.REACT_APP_BE_URL;
   const [showCreateUserForm, setShowCreateUserForm] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
-  const [showSummary, setShowSummary] = useState(false);
   const navigate = useNavigate();
 
   const handleCreateUserClick = () => {
     setShowCreateUserForm(true);
     setShowCalendar(false);
-    setShowSummary(false);
   };
 
   const handleCalendarClick = () => {
     setShowCreateUserForm(false);
     setShowCalendar(true);
-    setShowSummary(false);
-  };
-
-  const handleSummaryClick = () => {
-    setShowCreateUserForm(false);
-    setShowCalendar(false);
-    setShowSummary(true);
   };
 
   const handleCreateUser = async (formData) => {
     try {
-      const response = await fetch('/api/users', {
+      const response = await fetch(`${BeURL}/api/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,13 +70,11 @@ const AdminDashboard = () => {
         <div className="menu">
           <button onClick={handleCreateUserClick}>Crear Usuario</button>
           <button onClick={handleCalendarClick}>Calendario</button>
-          <button onClick={handleSummaryClick}>Resumen</button>
           <button onClick={handleLogout}>Cerrar Sesión</button>
         </div>
 
         <div className="option">
           {showCreateUserForm && <UserCreationForm onCreateUser={handleCreateUser} />}
-          {showSummary && <Summary />}
           {showCalendar && <ScheduleGuard />}
           {showCalendar && <ScheduleUti />}
         </div>
