@@ -32,27 +32,27 @@ const Home = () => {
         const userRole = response.data.rol;
         switch (userRole) {
           case 'Admin':
-            navigate('/AdminDashboard');
+            navigate('/admindashboard');
             break;
           case 'Coordinador':
             const userCalendar = response.data.calendar_type
             switch (userCalendar) {
               case 'Guardia':
-                navigate('/GuardDashboard');
+                navigate('/guarddashboard');
                 break;
               case 'Uti':
-                navigate('/UtiDashboard');
+                navigate('/utidashboard');
                 break;
               default:
-                navigate('/VisitDashboard');
+                navigate('/visitdashboard');
                 break;
             }            
             break;
           case 'Medico':
-            navigate('/VisitDashboard'); 
+            navigate('/visitdashboard'); 
             break;
           default:
-            navigate('/VisitDashboard');
+            navigate('/visitdashboard');
             break;
         }
         
